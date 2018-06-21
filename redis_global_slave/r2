@@ -1,0 +1,3 @@
+#!/bin/sh
+killall redis_global_slave_daemon
+./redis_global_slave_daemon &> /dev/null &

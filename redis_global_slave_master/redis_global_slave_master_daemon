@@ -1,0 +1,12 @@
+#!/bin/sh
+
+while [ 1 ]; do
+	alive=`netstat -altp | grep  6379 | wc -l`
+	if [[ $alive -eq 0 ]];
+	then
+		systemctl start redis-global-slave-master.service
+		echo program crashed, restart at `date +"%w %Y/%m/%d, %H:%M:%S"` >> RESTART.log
+		sleep 10
+	fi
+	sleep 20
+done

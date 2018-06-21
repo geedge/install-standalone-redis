@@ -1,0 +1,14 @@
+[Unit]
+Description=Redis Global Slave Instance
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/redis-server /home/mesasoft/redis_global_slave/redis_global_slave.conf
+RestartSec=10
+On-failure=always
+
+[Install]
+Alias=redis-global-slave
+WantedBy=multi-user.target

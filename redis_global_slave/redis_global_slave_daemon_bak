@@ -1,0 +1,17 @@
+#!/bin/sh
+
+while [ 1 ]; do
+	alive=`netstat -antlp | grep LISTEN | grep -E '6380|6381|6382|6383|6384|6385|6386|6387|6388|6389'  | wc -l`
+	if [[ $alive -ne 10 ]];
+	then
+		#systemctl start redis-global-slave.service
+		for((i=6380;i<=6389;i++))
+		do
+			cd ./$i/; taskset -c 3-20 redis-server redis$i.conf; cd -
+		done
+
+		echo program crashed, restart at `date +"%w %Y/%m/%d, %H:%M:%S"` >> RESTART.log
+		sleep 10
+	fi
+	sleep 20
+done
