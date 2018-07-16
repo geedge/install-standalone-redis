@@ -17,8 +17,8 @@ function redis_master
 
 	sed -i "s/bind 127.0.0.1/bind `ifconfig $device | grep netmask | awk '{print $2}'`/g" $MASTER/redis_master.conf
 	sed -i "s/127.0.0.1/`ifconfig $device | grep netmask | awk '{print $2}'`/g" $MASTER/reset_redis4maat.sh
-	sed -i "s/logfile \"\"/logfile \"$1redis_master.log/g" $MASTER/redis_master.conf
 
+	chmod 777 $MASTER/redis_master_daemon
 	systemctl start redis-master-daemon
 	sleep 5
 	chmod 777 $MASTER/reset_redis4maat.sh
@@ -39,6 +39,7 @@ function redis_slave_master
 	systemctl enable redis-global-slave-master.service
 	systemctl daemon-reload
 
+	chmod 777 $SLAVE_MASTER/redis_global_slave_master_daemon
 	systemctl start redis-global-slave-master-daemon
 }
 
@@ -55,6 +56,8 @@ function redis_slave
 		sed -i "s/redis_6379.pid/`echo "redis_$i.pid"`/g" $SLAVE$i/redis$i.conf
 	done
 
+	chmod 777 $SLAVE/r2
+	chmod 777 $SLAVE/redis_global_slave_daemon
 	cd $SLAVE; ./r2; cd -
 }
 
