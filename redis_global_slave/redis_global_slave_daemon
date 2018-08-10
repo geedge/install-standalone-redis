@@ -5,7 +5,7 @@ while [ 1 ]; do
     do
         port_alive=`netstat -antlp | grep $i | wc -l`
         if [[ $port_alive -lt 1 ]]; then
-              cd ./$i/; taskset -c 3-20 redis-server redis$i.conf; cd -
+              cd ./$i/; redis-server redis$i.conf; cd -
               echo program crashed, restart at `date +"%w %Y/%m/%d, %H:%M:%S"` >> RESTART.log
         fi
      done

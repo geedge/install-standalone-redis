@@ -7,7 +7,7 @@ After=network.target
 Type=simple
 ExecStart=/usr/local/bin/redis-server /home/mesasoft/redis_master/redis_master.conf
 RestartSec=10
-On-failure=always
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
