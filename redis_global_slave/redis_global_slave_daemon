@@ -3,7 +3,7 @@
 while [ 1 ]; do
     for((i=6380;i<=6389;i++))
     do
-        port_alive=`netstat -antlp | grep $i | wc -l`
+        port_alive=`netstat -antlp | grep -w $i | wc -l`
         if [[ $port_alive -lt 1 ]]; then
               cd ./$i/; redis-server redis$i.conf; cd -
               echo program crashed, restart at `date +"%w %Y/%m/%d, %H:%M:%S"` >> RESTART.log
